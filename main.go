@@ -20,7 +20,7 @@ var (
 	DUP_TO_STOP   int             = 500                   // максимум повторов до остановки
 	HASH_FILE     string          = "hash.bin"            // файл с хэшами
 	QUOTES_FILE   string          = "quotes.txt"          //файл с цитатами
-	used          map[string]bool = make(map[string]bool) // карта, в в качесте ключей используем строки, а значений - бул
+	used          map[string]bool = make(map[string]bool) // карта, в качестве ключей используем строки, а значений - бул
 )
 
 func init() {
