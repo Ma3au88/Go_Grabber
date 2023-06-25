@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/opesun/goquery"
 	"io"
+	"log"
 	"os"
 	"os/signal"
 	"runtime"
@@ -19,7 +20,7 @@ var (
 	REPORT_PERIOD int             = 10                    // частота отчетов (сек)
 	DUP_TO_STOP   int             = 500                   // максимум повторов до остановки
 	HASH_FILE     string          = "hash.bin"            // файл с хэшами
-	QUOTES_FILE   string          = "quotes.txt"          //файл с цитатами
+	QUOTES_FILE   string          = "quotes.txt"          // файл с цитатами
 	used          map[string]bool = make(map[string]bool) // карта, в качестве ключей используем строки, а значений - бул
 )
 
@@ -42,7 +43,7 @@ func grab() <-chan string {
 				x, err := goquery.ParseUrl("http://vpustotu.ru/moderation/")
 				if err == nil {
 					if s := strings.TrimSpace(x.Find(".fi_text").Text()); s != "" {
-						c <- s // и отправлем их в канал
+						c <- s // и отправляем их в канал
 					}
 				}
 				time.Sleep(100 * time.Millisecond)
@@ -76,7 +77,7 @@ func readHashes() {
 			if err == io.EOF {
 				break
 			}
-			panic(err)
+			log.Fatal(err)
 		}
 		if n == 16 {
 			used[hex.EncodeToString(data)] = true
@@ -87,9 +88,9 @@ func readHashes() {
 }
 
 // функция проверки открытия файлов на ошибки
-func check(e error) {
-	if e != nil {
-		panic(e)
+func check(err error) {
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
